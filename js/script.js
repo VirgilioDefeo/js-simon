@@ -45,19 +45,24 @@ function hideNumbersAndShowInputs() {
 }
 
 function validateInputs(inputs) {
-  let isValid = true;
-  inputs.forEach(input => {
-    const value = input.value.trim();
-    if (!/^\d+$/.test(value)) {
-      input.classList.add('invalid');
-      isValid = false;
-    } else {
-      input.classList.remove('invalid');
-    }
-  });
-  return isValid;
-}
-
+    let isValid = true;
+  
+    inputs.forEach(input => {
+      const value = input.value.trim();
+      const number = Number(value);
+  
+      // Verifica se è un numero intero positivo e non NaN
+      if (!Number.isInteger(number) || number < 0) {
+        input.classList.add('invalid');
+        isValid = false;
+      } else {
+        input.classList.remove('invalid');
+      }
+    });
+  
+    return isValid;
+  }
+  
 submitBtn.addEventListener('click', () => {
   const inputs = Array.from(inputContainer.querySelectorAll('input'));
   const isValid = validateInputs(inputs);
